@@ -1,0 +1,37 @@
+#version 450
+#extension GL_GOOGLE_include_directive : enable
+#include "common.h"
+
+layout(local_size_x = 8, local_size_y = 8, local_size_z = 1) in;
+
+layout(push_constant) uniform Params {
+    MatrixParams p;
+} params;
+
+layout(set = 0, binding = 0) readonly buffer BufferA {
+    float data[];
+} A;
+
+layout(set = 0, binding = 1) readonly buffer BufferB {
+    float data[];
+} B;
+
+layout(set = 0, binding = 2) writeonly buffer BufferC {
+    float data[];
+} C;
+
+void main() {
+    uint row = gl_GlobalInvocationID.x;
+    uint col = gl_GlobalInvocationID.y;
+    uint batch_idx = gl_GlobalInvocationID.z;
+
+    if (row < params.p.m && col < params.p.n && batch_idx < params.p.batch) {
+        float sum = 0.0;
+        for (uint k = 0; k < params.p.k; ++k) {
+            sum += GET_DATA(A)[IX3D(batch_idx, row, k, params.p.m, params.p.k)] * 
+                   GET_DATA(B)[IX3D(batch_idx, k, col, params.p.k, params.p.n)];
+        }
+        GET_DATA(C)[IX3D(batch_idx, row, col, params.p.m, params.p.n)] = sum;
+
+    }
+}

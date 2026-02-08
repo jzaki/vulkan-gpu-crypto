@@ -1,0 +1,54 @@
+# 3D Matrix Multiplication Benchmark (Vulkan vs CPU)
+
+A minimal benchmark to compare CPU and GPU performance for 3-dimensional (Batch) Matrix Multiplication. Both implementations share the same indexing logic for consistency.
+
+## Performance Result
+
+On this environment:
+- **CPU Time**: ~60-70 ms
+- **Vulkan GPU Time**: ~2 ms (~30x Speedup)
+
+## Features
+
+- **Shared Logic**: CPU (`cpu_matmul.cpp`) and GPU (`vulkan_matmul.comp`) share identical indexing macros in `common.h`.
+- **Vulkan Compute**: Uses raw Vulkan API for GPU acceleration with a compute shader.
+- **Verification**: Built-in verification compares GPU results against CPU results with a floating-point tolerance.
+- **Minimal Boilerplate**: Focused on the core math and Vulkan compute setup.
+
+## Project Structure
+
+- `common.h`: Shared definitions and indexing macros (`IX3D`).
+- `main.cpp`: Main benchmark driver, Vulkan host code, and verification.
+- `cpu_matmul.cpp`: Sequential CPU implementation.
+- `vulkan_matmul.comp`: GLSL compute shader.
+- `vulkan_helper.h`: Minimal Vulkan initialization helpers.
+- `Makefile`: Build instructions.
+
+## Prerequisites
+
+- C++ Compiler (GCC/G++)
+- Vulkan SDK (Headers and Loader)
+- `glslangValidator` (to compile the shader)
+
+## Build and Run
+
+1. **Compile the shader**:
+   ```bash
+   glslangValidator -V vulkan_matmul.comp -o vulkan_matmul.spv
+   ```
+
+2. **Build the benchmark**:
+   ```bash
+   make
+   ```
+
+3. **Run**:
+   ```bash
+   ./benchmark
+   ```
+
+## Configuration
+
+You can adjust matrix dimensions in [common.h](common.h):
+- `BATCH`: Number of matrices to multiply.
+- `M`, `K`, `N`: Dimensions for the multiplication `(M x K) * (K x N)`.
