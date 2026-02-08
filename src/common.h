@@ -23,11 +23,17 @@ const uint M = 128;
 const uint K = 128;
 const uint N = 128;
 
+const uint MSM_POINTS = 1 << 16; // 65536 points
+
 struct MatrixParams {
     uint batch;
     uint m;
     uint k;
     uint n;
+};
+
+struct MsmParams {
+    uint points;
 };
 
 

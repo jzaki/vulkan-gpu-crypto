@@ -1,0 +1,31 @@
+#version 450
+#extension GL_GOOGLE_include_directive : enable
+#include "common.h"
+
+layout(local_size_x = 256) in;
+
+layout(push_constant) uniform Params {
+    MsmParams params;
+} push;
+
+layout(std430, binding = 0) buffer Points {
+    float points[];
+};
+
+layout(std430, binding = 1) buffer Scalars {
+    float scalars[];
+};
+
+layout(std430, binding = 2) buffer Result {
+    float result[];
+};
+
+void main() {
+    // Stub for MSM benchmark
+    // In a real implementation, this would use Pippenger or another GPU-optimized algorithm.
+    // For now, just a stub that writes something to the result.
+    if (gl_GlobalInvocationID.x == 0) {
+        // Copy the first point's first float as a dummy result
+        result[0] = points[0];
+    }
+}
