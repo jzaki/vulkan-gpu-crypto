@@ -5,13 +5,18 @@
 #include <stdint.h>
 typedef uint32_t uint;
 #define GET_DATA(buf) (buf).data()
+#define SHARED_FN inline
 #else
+// GLSL compatibility
 #define GET_DATA(buf) (buf).data
+#define SHARED_FN
 #endif
 
 
-// Shared Indexing Macro: (batch, row, col) -> linear index
-#define IX3D(b, r, c, rows, cols) (((b) * (rows) * (cols)) + ((r) * (cols)) + (c))
+// Shared Indexing Function: (batch, row, col) -> linear index
+SHARED_FN uint IX3D(uint b, uint r, uint c, uint rows, uint cols) {
+    return (b * rows * cols) + (r * cols) + c;
+}
 
 const uint BATCH = 32;
 const uint M = 128;
