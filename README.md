@@ -32,23 +32,33 @@ On this environment:
 
 ## Build and Run
 
-1. **Compile the shader**:
-   ```bash
-   glslangValidator -V vulkan_matmul.comp -o vulkan_matmul.spv
-   ```
-
-2. **Build the benchmark**:
+1. **Build the benchmark**:
    ```bash
    make
    ```
+   This will compile the compute shaders into SPIR-V and build the main executable. All output files are placed in the `build/` directory.
 
-3. **Run**:
+2. **Run**:
    ```bash
-   ./benchmark
+   ./build/benchmark [options]
    ```
+
+### CLI Parameters
+
+The benchmark supports the following options:
+
+- `--matmul`: Run only the Matrix Multiplication benchmark.
+- `--msm`: Run only the Multi-Scalar Multiplication (MSM) benchmark.
+- `--all`: Run all benchmarks (default).
+
+Example:
+```bash
+./build/benchmark --matmul
+```
 
 ## Configuration
 
-You can adjust matrix dimensions in [common.h](common.h):
+You can adjust dimensions in [common.h](src/common.h):
 - `BATCH`: Number of matrices to multiply.
 - `M`, `K`, `N`: Dimensions for the multiplication `(M x K) * (K x N)`.
+- `MSM_POINTS`: Number of points for the MSM benchmark.
