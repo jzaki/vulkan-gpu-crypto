@@ -22,11 +22,13 @@ On this environment:
 - `cpu_matmul.cpp`: Sequential CPU implementation.
 - `vulkan_matmul.comp`: GLSL compute shader.
 - `vulkan_helper.h`: Minimal Vulkan initialization helpers.
-- `Makefile`: Build instructions.
+- `CMakeLists.txt`: Build configuration.
+- `Makefile`: Legacy build instructions.
 
 ## Prerequisites
 
-- C++ Compiler (GCC/G++)
+- C++ Compiler (GCC/G++ or Clang)
+- CMake (3.10+)
 - Vulkan SDK (Headers and Loader)
 - `glslangValidator` (to compile the shader)
 
@@ -34,13 +36,15 @@ On this environment:
 
 1. **Build the benchmark**:
    ```bash
+   mkdir build && cd build
+   cmake ..
    make
    ```
-   This will compile the compute shaders into SPIR-V and build the main executable. All output files are placed in the `build/` directory.
+   This will compile the compute shaders into SPIR-V and build the main executable.
 
 2. **Run**:
    ```bash
-   ./build/benchmark [options]
+   ./benchmark [options]
    ```
 
 ### CLI Parameters
