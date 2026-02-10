@@ -12,7 +12,6 @@ typedef uint32_t uint;
 #define SHARED_FN
 #endif
 
-
 // Shared Indexing Function: (batch, row, col) -> linear index
 SHARED_FN uint IX3D(uint b, uint r, uint c, uint rows, uint cols) {
     return (b * rows * cols) + (r * cols) + c;
@@ -23,7 +22,7 @@ const uint M = 128;
 const uint K = 128;
 const uint N = 128;
 
-const uint MSM_POINTS = 1 << 16; // 65536 points
+const uint MSM_POINTS = 1 << 16;  // 65536 points
 
 struct MatrixParams {
     uint batch;
@@ -36,5 +35,4 @@ struct MsmParams {
     uint points;
 };
 
-
-#endif // COMMON_H
+#endif  // COMMON_H

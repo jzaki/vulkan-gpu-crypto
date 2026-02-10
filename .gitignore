@@ -3,6 +3,7 @@ build/
 
 # IDE files
 .vscode/
+.cache/
 
 # System files
 .DS_Store

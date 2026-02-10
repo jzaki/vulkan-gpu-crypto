@@ -62,3 +62,18 @@ target_link_libraries(benchmark PRIVATE
 # or ensure main.cpp looks in the right place.
 # The Makefile puts SPV in BUILD_DIR along with the executable.
 # CMake by default puts executable in CMAKE_CURRENT_BINARY_DIR.
+
+# Clang-format target
+find_program(CLANG_FORMAT clang-format)
+if(CLANG_FORMAT)
+    file(GLOB_RECURSE ALL_SOURCE_FILES 
+        ${SRC_DIR}/*.cpp 
+        ${SRC_DIR}/*.h
+    )
+    add_custom_target(format
+        COMMAND ${CLANG_FORMAT} -i ${ALL_SOURCE_FILES}
+        COMMENT "Formatting source files with clang-format"
+    )
+else()
+    message(STATUS "clang-format not found, 'format' target will not be available")
+endif()

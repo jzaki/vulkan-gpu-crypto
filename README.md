@@ -34,18 +34,38 @@ On this environment:
 
 ## Build and Run
 
-1. **Build the benchmark**:
+1. **Configure and Build**:
+   From the project's base directory, run:
    ```bash
-   mkdir build && cd build
-   cmake ..
-   make
+   cmake -B build
+   cmake --build build
    ```
    This will compile the compute shaders into SPIR-V and build the main executable.
 
 2. **Run**:
    ```bash
-   ./benchmark [options]
+   ./build/benchmark [options]
    ```
+
+3. **Clean build artifacts**:
+   To clean the build directory but keep the configuration:
+   ```bash
+   cmake --build build --target clean
+   ```
+   To completely remove the `build` directory:
+   ```bash
+   rm -rf build
+   ```
+
+## Development
+
+### Code Formatting
+
+To format the source code using `clang-format`:
+
+```bash
+cmake --build build --target format
+```
 
 ### CLI Parameters
 
