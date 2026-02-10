@@ -1,8 +1,21 @@
 cmake_minimum_required(VERSION 3.10)
 project(vulkan_gpu_crypto CXX)
 
+
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+find_package(OpenMP)
+if(OpenMP_CXX_FOUND)
+    link_libraries(OpenMP::OpenMP_CXX)
+endif()
+
+if(MSVC)
+    add_compile_options(/arch:AVX2 /openmp)
+else()
+    add_compile_options(-mavx2 -mfma -fopenmp -O3)
+endif()
+
 
 # Find Vulkan
 find_package(Vulkan REQUIRED)

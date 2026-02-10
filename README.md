@@ -4,9 +4,9 @@ A minimal benchmark to compare CPU and GPU performance for 3-dimensional (Batch)
 
 ## Performance Result
 
-On this environment:
-- **CPU Time**: ~60-70 ms
-- **Vulkan GPU Time**: ~2 ms (~30x Speedup)
+MatMul on old gpu:
+- **Optimised CPU Time**: ~4.5 ms
+- **Vulkan GPU Time**: ~2 ms (2.25x Speedup)
 
 ## Features
 
@@ -37,24 +37,20 @@ On this environment:
 1. **Configure and Build**:
    From the project's base directory, run:
    ```bash
-   cmake -B build
-   cmake --build build
+   cmake .
+   cmake make
    ```
    This will compile the compute shaders into SPIR-V and build the main executable.
 
 2. **Run**:
    ```bash
-   ./build/benchmark [options]
+   ./benchmark [options]
    ```
 
 3. **Clean build artifacts**:
    To clean the build directory but keep the configuration:
    ```bash
-   cmake --build build --target clean
-   ```
-   To completely remove the `build` directory:
-   ```bash
-   rm -rf build
+   make clean
    ```
 
 ## Development
@@ -64,7 +60,7 @@ On this environment:
 To format the source code using `clang-format`:
 
 ```bash
-cmake --build build --target format
+make format
 ```
 
 ### CLI Parameters
@@ -77,7 +73,7 @@ The benchmark supports the following options:
 
 Example:
 ```bash
-./build/benchmark --matmul
+./benchmark --matmul
 ```
 
 ## Configuration
