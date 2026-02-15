@@ -1,10 +1,17 @@
-# 3D Matrix Multiplication Benchmark (Vulkan vs CPU)
+# Algorithm Implementations Benchmarking - GPU (Language: Vulkan) vs CPU ()
 
-A minimal benchmark to compare CPU and GPU performance for 3-dimensional (Batch) Matrix Multiplication. Both implementations share the same indexing logic for consistency.
+A set of implementations to compare optimised CPU and GPU performance. Where possible, key functions are shared in both implementations.
 
-## Performance Result
+For more context see [Background.md](Background.md).
 
-MatMul on old gpu:
+Algorithms:
+- 3D Matrix Multiplication (Batch)
+  - TODO: experiment with params to align with hardware size/limits read via vulkan
+- TODO: Multi-Scalar Multiplication (MSM) Pippenger algorithm
+
+## Performance Results
+
+### MatMul on old gpu:
 - **Optimised CPU Time**: ~4.5 ms
 - **Vulkan GPU Time**: ~2 ms (2.25x Speedup)
 
