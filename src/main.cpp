@@ -22,6 +22,45 @@ std::vector<uint> load_spirv(const char* filename) {
     return buffer;
 }
 
+void show_vk_info(VulkanCompute vk) {
+    VkPhysicalDeviceProperties props;
+    vkGetPhysicalDeviceProperties(vk.physicalDevice, &props);
+
+    std::cout << "\n--- Vulkan Device Info ---" << std::endl;
+    std::cout << "Device Name: " << props.deviceName << std::endl;
+    std::cout << "Device Type: " << props.deviceType << std::endl;
+    std::cout << "API Version: " << VK_API_VERSION_MAJOR(props.apiVersion) << "."
+              << VK_API_VERSION_MINOR(props.apiVersion) << "."
+              << VK_API_VERSION_PATCH(props.apiVersion) << std::endl;
+
+    std::cout << "\n--- Device Limits ---" << std::endl;
+    std::cout << "Max Compute Shared Memory Size: " << props.limits.maxComputeSharedMemorySize
+              << " bytes" << std::endl;
+    std::cout << "Max Compute Work Group Count: [" << props.limits.maxComputeWorkGroupCount[0]
+              << ", " << props.limits.maxComputeWorkGroupCount[1] << ", "
+              << props.limits.maxComputeWorkGroupCount[2] << "]" << std::endl;
+    std::cout << "Max Compute Work Group Invocations: "
+              << props.limits.maxComputeWorkGroupInvocations << std::endl;
+    std::cout << "Max Compute Work Group Size: [" << props.limits.maxComputeWorkGroupSize[0] << ", "
+              << props.limits.maxComputeWorkGroupSize[1] << ", "
+              << props.limits.maxComputeWorkGroupSize[2] << "]" << std::endl;
+
+    VkPhysicalDeviceMemoryProperties memProps;
+    vkGetPhysicalDeviceMemoryProperties(vk.physicalDevice, &memProps);
+    std::cout << "\n--- Memory Properties ---" << std::endl;
+    std::cout << "Memory Heap Count: " << memProps.memoryHeapCount << std::endl;
+    for (uint32_t i = 0; i < memProps.memoryHeapCount; i++) {
+        std::cout << "  Heap " << i << ": size " << memProps.memoryHeaps[i].size / (1024 * 1024)
+                  << " MB, flags " << memProps.memoryHeaps[i].flags << std::endl;
+    }
+    std::cout << "Memory Type Count: " << memProps.memoryTypeCount << std::endl;
+    for (uint32_t i = 0; i < memProps.memoryTypeCount; i++) {
+        std::cout << "  Type " << i << ": heapIndex " << memProps.memoryTypes[i].heapIndex
+                  << ", flags " << memProps.memoryTypes[i].propertyFlags << std::endl;
+    }
+    std::cout << "--------------------------\n" << std::endl;
+}
+
 double run_vulkan(VulkanCompute& vk, const char* shader_path, void* params_ptr, size_t params_size,
                   const std::vector<void*>& inputs, const std::vector<size_t>& input_sizes,
                   void* output, size_t output_size, uint32_t gx, uint32_t gy, uint32_t gz) {
@@ -236,6 +275,7 @@ void benchmark_msm(VulkanCompute& vk) {
 }
 
 int main(int argc, char** argv) {
+    bool show_info = false;
     bool do_matmul = false;
     bool do_msm = false;
 
@@ -245,7 +285,9 @@ int main(int argc, char** argv) {
     } else {
         for (int i = 1; i < argc; ++i) {
             std::string arg = argv[i];
-            if (arg == "--matmul")
+            if (arg == "--info")
+                show_info = true;
+            else if (arg == "--matmul")
                 do_matmul = true;
             else if (arg == "--msm")
                 do_msm = true;
@@ -261,8 +303,9 @@ int main(int argc, char** argv) {
     }
 
     VulkanCompute vk;
-    vk.init();
+    vk.init(show_info);
 
+    if (show_info) show_vk_info(vk);
     if (do_matmul) benchmark_matmul(vk);
     if (do_msm) benchmark_msm(vk);
 
