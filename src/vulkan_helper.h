@@ -44,6 +44,12 @@ struct VulkanCompute {
         physicalDevice = devices[0];  // Just take the first one for simplicity
 
         if (verbose) {
+            std::cout << "available devices: " << deviceCount << std::endl;
+            for (uint32_t i = 0; i < deviceCount; i++) {
+                VkPhysicalDeviceProperties deviceProperties;
+                vkGetPhysicalDeviceProperties(devices[i], &deviceProperties);
+                std::cout << "Device " << i << ": " << deviceProperties.deviceName << std::endl;
+            }
             VkPhysicalDeviceProperties deviceProperties;
             vkGetPhysicalDeviceProperties(physicalDevice, &deviceProperties);
             std::cout << "Selected GPU: " << deviceProperties.deviceName << std::endl;

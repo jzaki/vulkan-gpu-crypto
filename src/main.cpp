@@ -44,6 +44,13 @@ void show_vk_info(VulkanCompute vk) {
     std::cout << "Max Compute Work Group Size: [" << props.limits.maxComputeWorkGroupSize[0] << ", "
               << props.limits.maxComputeWorkGroupSize[1] << ", "
               << props.limits.maxComputeWorkGroupSize[2] << "]" << std::endl;
+    std::cout << "Max Uniform Buffer Range: " << props.limits.maxUniformBufferRange << std::endl;
+    std::cout << "Max Storage Buffer Range: " << props.limits.maxStorageBufferRange << std::endl;
+    std::cout << "Max Push Constants Size: " << props.limits.maxPushConstantsSize << std::endl;
+    std::cout << "Max Memory Allocation Count: " << props.limits.maxMemoryAllocationCount
+              << std::endl;
+    std::cout << "Max Sampler Allocation Count: " << props.limits.maxSamplerAllocationCount
+              << std::endl;
 
     VkPhysicalDeviceMemoryProperties memProps;
     vkGetPhysicalDeviceMemoryProperties(vk.physicalDevice, &memProps);

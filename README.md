@@ -45,7 +45,7 @@ Algorithms:
    From the project's base directory, run:
    ```bash
    cmake .
-   cmake make
+   make
    ```
    This will compile the compute shaders into SPIR-V and build the main executable.
 
@@ -77,10 +77,11 @@ The benchmark supports the following options:
 - `--matmul`: Run only the Matrix Multiplication benchmark.
 - `--msm`: Run only the Multi-Scalar Multiplication (MSM) benchmark.
 - `--all`: Run all benchmarks (default).
+- `--info`: Print verbose information about the Vulkan device and Vulkan helper functions.
 
 Example:
 ```bash
-./benchmark --matmul
+./benchmark --matmul --info
 ```
 
 ## Configuration

@@ -59,10 +59,28 @@ Similarly can use `maxComputeWorkGroupInvocations`, `maxComputeSharedMemorySiz
 - Intel → Xe‑core (or EU – Execution Unit)
 - Apple → SIMD execution unit within a GPU tile
 
-## Effective use of Subgroup Size
-...
+## Vulkan primary considerations
 
-## ...
+### Instance and physical devices
+
+VkInstance, VkPhysicalDevice, 
+
+Possible to use multiple physical devices simultaneously?
+
+### Device features and properties
+VkPhysicalDeviceFeatures, VkPhysicalDeviceProperties
+
+### Queue Family properties
+VkQueueFamilyProperties
+
+### Memory properties
+Use of VkMemory Property Flags for efficient caching (bits linked [here](https://docs.vulkan.org/refpages/latest/refpages/source/VkMemoryPropertyFlagBits.html))
+
+Memory upload/readback - https://gpuopen-librariesandsdks.github.io/VulkanMemoryAllocator/html/usage_patterns.html
+See "Advanced data uploading" for considerations of unified memory, read considerations (seq, no writes), and the PCI bus for particular hardware.
+
+## Vulkan image considerations
+Consider use for particular calculations if possible/beneficial.
 
 ## Appendix
 ### Other work using gpus in cryptography
