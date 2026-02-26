@@ -17,6 +17,12 @@ Various efforts around this space target specific hardware with their libraries 
 	- eg in MSM using Pippenger algorithm: windowing for bucketing
 - Pre-computation for certain repeat computations
 
+## Evaluation of benefits
+
+While there's a gain to having one library increase performance across multiple vendors' gpus, each attempted improvement shall be measured.
+
+The performance gain of something implemented in Vulkan would be benchmarked against the same implementation in C++ on the CPU, as well as another gpu implementation (eg CUDA for NVIDIA, or possibly WebGPU in the browser).
+
 ## Why use Vulkan?
 
 Vulkan is a low‑level, cross‑platform graphics and compute API that was standardized by the Khronos Group in February 2016 (the first version, 1.0). It is designed to give developers much finer control over GPU hardware than older APIs such as OpenGL or Direct3D 11, while still providing a portable abstraction that works on many operating systems and devices.
